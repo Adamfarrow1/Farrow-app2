@@ -1,0 +1,65 @@
+@startuml
+
+inventoryManagementApplication o-- inventoryManagementApplicationController
+inventoryManagementApplicationController o-- recordItem
+
+class inventoryManagementApplication{
++start(Stage stage)
++main(String[] args)
+}
+class inventoryManagementApplicationController{
+
+-Button addButton
+-TextField addName
+-TextField addPrice
+-TextField addSerialNumber
+-CheckBox htmlCheckBox
+-CheckBox jsonCheckBox
+-Button loadButton
+-TextField loadName
+-TextField loadPath
+-Button removeItem
+-Button saveButton
+-TextField saveName
+-TextField savePath
+-TextField searchName
+-Button searchNameButton
+-TextField searchSerialNumber
+-Button searchSerialNumberButton
+-TableView<?> table
+-TableColumn<?, ?> tableName
+-TableColumn<?, ?> tablePrice
+-TableColumn<?, ?> tableSelect
+-TableColumn<?, ?> tableSerialNumber
+-CheckBox tsvCheckBox
+
++addItem(MouseEvent event)
++loadList(MouseEvent event)
++removeAll(MouseEvent event)
++removedItem(MouseEvent event)
++saveList(MouseEvent event)
++searchByName(MouseEvent event)
++void searchBySerialNumber(MouseEvent event)
+}
+
+class recordItem{
+
+
+ private String serialNumber;
+-String serialNumber
+-String name
+-String price
+-CheckBox select
+
++recordItem(String description,String dueDate ,String complete)
++CheckBox getSelect()
++void setSelect(CheckBox select)
++String getPrice()
++void setPrice(String price)
++void setSerialNumber(String serialNumber)
++void setName(String name)
++String getSerialNumber()
++String getName()
+}
+
+@enduml

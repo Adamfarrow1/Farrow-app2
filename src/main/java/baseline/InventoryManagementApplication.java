@@ -1,5 +1,5 @@
 /*
- *  UCF COP3330 Fall 2021 Application Assignment 1 Solution
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
  *  Copyright 2021 Adam Farrow
  */
 package baseline;
@@ -19,7 +19,7 @@ public class InventoryManagementApplication extends javafx.application.Applicati
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("InventoryApplication.fxml")));
         //creates a new scene
         Scene scene = new Scene(root);
-        //sets the title to do List
+        //sets the title to Inventory Management
         stage.setTitle("Inventory Management");
         //sets the scene as scene(root)
         stage.setScene(scene);

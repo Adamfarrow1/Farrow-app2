@@ -1,0 +1,59 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Adam Farrow
+ */
+package baseline;
+
+import javafx.scene.control.CheckBox;
+
+public class recordItem {
+    private String serialNumber;
+    private String name;
+    private String price;
+    private CheckBox select;
+    //defines instance variables
+    public recordItem(String description,String dueDate ,String complete) {
+        // sets instance variables to the method arguments
+        this.serialNumber = description;
+        this.name = dueDate;
+        this.price = complete;
+        this.select = new CheckBox();
+    }
+
+    public CheckBox getSelect(){
+        //returns the check
+        return select;
+    }
+    public void setSelect(CheckBox select){
+        //sets the select box
+        this.select = select;
+    }
+
+    public String getPrice(){
+        //returns the price
+        return price;
+    }
+    public void setPrice(String price) {
+        //sets the price
+        this.price = price;
+    }
+
+    public void setSerialNumber(String serialNumber){
+        //sets the serial number
+        this.serialNumber = serialNumber;
+    }
+    public void setName(String name){
+        //sets the name
+        this.name = name;
+    }
+
+    public String getSerialNumber() {
+        //returns the serial number
+        return serialNumber;
+    }
+    public String getName(){
+        //returns the name
+        return name;
+    }
+}
+
