@@ -132,7 +132,7 @@ public class InventoryManagementApplicationController {
             flag = 1;
         }
         else {
-            nameText.setText("");
+            priceText.setText("");
         }
         //if there was no flag then add the item to the list and remove all the error messages
         if(flag == 0) {
