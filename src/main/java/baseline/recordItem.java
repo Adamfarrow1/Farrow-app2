@@ -12,11 +12,11 @@ public class recordItem {
     private String price;
     private CheckBox select;
     //defines instance variables
-    public recordItem(String description,String dueDate ,String complete) {
+    public recordItem(String serialNumber,String name ,String price) {
         // sets instance variables to the method arguments
-        this.serialNumber = description;
-        this.name = dueDate;
-        this.price = complete;
+        this.serialNumber = serialNumber;
+        this.name = name;
+        this.price = price;
         this.select = new CheckBox();
     }
 
