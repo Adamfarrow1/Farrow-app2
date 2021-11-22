@@ -25,9 +25,6 @@ import org.jsoup.select.Elements;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 
 
 public class InventoryManagementApplicationController {
@@ -66,19 +63,19 @@ public class InventoryManagementApplicationController {
     private TextField searchSerialNumber;
 
     @FXML
-    private TableView<recordItem> table;
+    private TableView<RecordItems> table;
 
     @FXML
-    private TableColumn<recordItem, String> tableName;
+    private TableColumn<RecordItems, String> tableName;
 
     @FXML
-    private TableColumn<recordItem, String> tablePrice;
+    private TableColumn<RecordItems, String> tablePrice;
 
     @FXML
     private TableColumn<?, ?> tableSelect;
 
     @FXML
-    private TableColumn<recordItem, String> tableSerialNumber;
+    private TableColumn<RecordItems, String> tableSerialNumber;
 
     @FXML
     private CheckBox tsvCheckBox;
@@ -102,7 +99,7 @@ public class InventoryManagementApplicationController {
     private Text priceEditText;
 
     //define observable list of items
-    static ObservableList<recordItem> items = FXCollections.observableArrayList();
+    static ObservableList<RecordItems> items = FXCollections.observableArrayList();
     @FXML
      int addItem() {
         int flag = 0;
@@ -110,7 +107,7 @@ public class InventoryManagementApplicationController {
             return 0;
         //flag variable to check if the information inputted if valid
         //checks to see if the serial number is a duplicate if so give error message
-        for (recordItem item : items) {
+        for (RecordItems item : items) {
             if (addSerialNumber.getText().equals(item.getSerialNumber())) {
                 flag = 1;
                 serialNumberText.setText("Duplicate serial number");
@@ -140,7 +137,7 @@ public class InventoryManagementApplicationController {
         //if there was no flag then add the item to the list and remove all the error messages
         if(flag == 0) {
             String p = "$" + addPrice.getText();
-            items.add(new recordItem(addSerialNumber.getText(), addName.getText(), p));
+            items.add(new RecordItems(addSerialNumber.getText(), addName.getText(), p));
             table.setItems(items);
             table.getColumns().get(0).setVisible(false);
             table.getColumns().get(0).setVisible(true);
@@ -182,7 +179,7 @@ public class InventoryManagementApplicationController {
         for (Object subject : address) {
             //creates each index of array of the JSONArray into an object and adds it to the list
             JSONObject json = (JSONObject) subject;
-            items.add(new recordItem(json.get("Serial Number").toString(), json.get("Name").toString(), json.get("Price").toString()));
+            items.add(new RecordItems(json.get("Serial Number").toString(), json.get("Name").toString(), json.get("Price").toString()));
         }
 
     }
@@ -200,7 +197,7 @@ public class InventoryManagementApplicationController {
                 //while data isn't null read the current line and parse it by tab and then add each index of the array to items
                 while ((currentLine = br.readLine()) != null) {
                     data = currentLine.split("\t");
-                    items.add(new recordItem(data[0], data[1], data[2]));
+                    items.add(new RecordItems(data[0], data[1], data[2]));
                 }
             }
             table.setItems(items);
@@ -224,7 +221,7 @@ public class InventoryManagementApplicationController {
         Elements tdTags = tb.select("td");
         for(int i = 0; i < tdTags.size(); i = i + 3) {
             //iterates through all the table tags with td and adds them to the items list
-            items.add(new recordItem(tdTags.get(i).text(), tdTags.get(i+1).text(), tdTags.get(i+2).text()));
+            items.add(new RecordItems(tdTags.get(i).text(), tdTags.get(i+1).text(), tdTags.get(i+2).text()));
         }
         table.setItems(items);
         table.getColumns().get(0).setVisible(false);
@@ -232,7 +229,7 @@ public class InventoryManagementApplicationController {
     }
 
     @FXML
-    ObservableList<recordItem> removeAll() {
+    ObservableList<RecordItems> removeAll() {
         //deletes all the items inside the list
         items.clear();
         //refreshes the table
@@ -244,10 +241,10 @@ public class InventoryManagementApplicationController {
     }
 
     @FXML
-    ObservableList<recordItem> removedItem() {
+    ObservableList<RecordItems> removedItem() {
         //defines observable list called deleted items
-        ObservableList<recordItem> deletedItems = FXCollections.observableArrayList();
-        for(recordItem temp : items){
+        ObservableList<RecordItems> deletedItems = FXCollections.observableArrayList();
+        for(RecordItems temp : items){
             //loops through the items list and if the item checkbox is selected add it to the deleted items list
             if(temp.getSelect().isSelected()) {
                 deletedItems.add(temp);
@@ -294,7 +291,7 @@ public class InventoryManagementApplicationController {
                       "items" : [
                     """);
             //prints the items in the list to the json file
-            for(recordItem item : items){
+            for(RecordItems item : items){
                 fw.write("\t\t{\"Serial Number\": \""+ item.getSerialNumber() +"\", \"Name\": \""+  item.getName()  +"\", \"Price\": \""+ item.getPrice() +"\" }");
                 if(i != items.size() - 1)
                     fw.write(",");
@@ -319,7 +316,7 @@ public class InventoryManagementApplicationController {
         try(FileWriter fw = new FileWriter(path + name)){
             //prints the column titles of the table
             fw.write("Serial Number\tName\tPrice\n");
-            for (recordItem item : items) {
+            for (RecordItems item : items) {
                 //prints each item with tables separating the values
                 fw.write(item.getSerialNumber() + "\t" + item.getName() + "\t" + item.getPrice() + "\n");
             }
@@ -356,7 +353,7 @@ public class InventoryManagementApplicationController {
                         <th>Price</th>
                    </tr>
                     """);
-            for (recordItem item : items) {
+            for (RecordItems item : items) {
                 //prints all the items inside of items to the table
                 fw.write("<tr> \n<td>" + item.getSerialNumber() + "</td>\n");
                 fw.write("<td>" + item.getName() + "</td>\n");
@@ -375,25 +372,25 @@ public class InventoryManagementApplicationController {
     }
 
     @FXML
-    ObservableList<recordItem> searchByName() {
-        ObservableList<recordItem> searchedItems = FXCollections.observableArrayList();
+    ObservableList<RecordItems> searchByName() {
+        ObservableList<RecordItems> searchedItems = FXCollections.observableArrayList();
         //creates items searched list
-        for (recordItem item : items) {
+        for (RecordItems item : items) {
             //if the items searched is found then add it to the searched items list
             if (item.getName().contains(searchName.getText()))
                 searchedItems.add(item);
         }
         //show the searched items list
         if(table != null)
-        table.setItems(searchedItems);
+            table.setItems(searchedItems);
         return searchedItems;
     }
 
     @FXML
     void searchBySerialNumber() {
-        ObservableList<recordItem> searchedItems = FXCollections.observableArrayList();
+        ObservableList<RecordItems> searchedItems = FXCollections.observableArrayList();
         //creates searched items list
-        for (recordItem item : items) {
+        for (RecordItems item : items) {
             //if the item contains the search then add it to the searched item list
             if (item.getSerialNumber().contains(searchSerialNumber.getText()))
                 searchedItems.add(item);
@@ -403,10 +400,10 @@ public class InventoryManagementApplicationController {
     }
 
     @FXML
-    ObservableList<recordItem> editName(TableColumn.CellEditEvent<recordItem, String>recordItemStringCellEditEvent) {
+    ObservableList<RecordItems> editName(TableColumn.CellEditEvent<RecordItems, String>recordItemStringCellEditEvent) {
         int flag = 0;
         if(table == null)
-            return null;
+            return items;
         //if the name is invalid show error message and set flag equal to 1
         if(recordItemStringCellEditEvent.getNewValue().length() < 2 || recordItemStringCellEditEvent.getNewValue().length() > 256 ||  !recordItemStringCellEditEvent.getNewValue().matches("[a-zA-Z]*")) {
             flag = 1;
@@ -414,7 +411,7 @@ public class InventoryManagementApplicationController {
         }
         //if flag is 0 then set the name of the set the name to the edited value
         if(flag == 0) {
-            recordItem item = table.getSelectionModel().getSelectedItem();
+            RecordItems item = table.getSelectionModel().getSelectedItem();
             item.setName(recordItemStringCellEditEvent.getNewValue());
             nameEditText.setText("");
         }
@@ -426,10 +423,10 @@ public class InventoryManagementApplicationController {
     }
 
     @FXML
-    ObservableList<recordItem> editPrice(TableColumn.CellEditEvent<recordItem, String>recordItemStringCellEditEvent) {
+    ObservableList<RecordItems> editPrice(TableColumn.CellEditEvent<RecordItems, String>recordItemStringCellEditEvent) {
         int flag = 0;
         if(table == null)
-            return null;
+            return items;
         //check to see if the price is in the right format if it isn't set flag to 1
         if(!recordItemStringCellEditEvent.getNewValue().matches("(\\d*.\\d\\d)") || Double.parseDouble(recordItemStringCellEditEvent.getNewValue()) <= 0){
             flag = 1;
@@ -439,7 +436,7 @@ public class InventoryManagementApplicationController {
         if(flag == 0){
             priceEditText.setText("");
             String price = "$" + recordItemStringCellEditEvent.getNewValue();
-            recordItem item = table.getSelectionModel().getSelectedItem();
+            RecordItems item = table.getSelectionModel().getSelectedItem();
             item.setPrice(price);
         }
         //refresh the table contents
@@ -449,17 +446,17 @@ public class InventoryManagementApplicationController {
     }
 
     @FXML
-    ObservableList<recordItem> editSerialNumber(TableColumn.CellEditEvent<recordItem, String>recordItemStringCellEditEvent) {
+    ObservableList<RecordItems> editSerialNumber(TableColumn.CellEditEvent<RecordItems, String>recordItemStringCellEditEvent) {
         int flag = 0;
         if(table == null)
-            return null;
+            return items;
         //checks to see if the value is in the correct format if it isn't set flag to 1
         if(!recordItemStringCellEditEvent.getNewValue().matches("[a-zA-Z]-[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]-[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]-[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]")){
             serialNumberEditText.setText("Invalid. A-XXX-XXX-XXX required");
             flag = 1;
         }
         //checks to see if the serial number isn't already inside the list if it is set flag to 1
-        for (recordItem item : items) {
+        for (RecordItems item : items) {
             if (recordItemStringCellEditEvent.getNewValue().equals(item.getSerialNumber())) {
                 flag = 1;
                 serialNumberEditText.setText("Duplicate serial number");
@@ -467,7 +464,7 @@ public class InventoryManagementApplicationController {
         }
         //if flag is 0 then set the new serial number to the selected items serial number
         if(flag == 0) {
-            recordItem item = table.getSelectionModel().getSelectedItem();
+            RecordItems item = table.getSelectionModel().getSelectedItem();
             item.setSerialNumber(recordItemStringCellEditEvent.getNewValue());
             serialNumberEditText.setText("");
         }

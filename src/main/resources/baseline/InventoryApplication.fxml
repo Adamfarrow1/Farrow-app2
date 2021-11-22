@@ -44,6 +44,5 @@
       <Text fx:id="serialNumberEditText" layoutX="285.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="171.3300781249999" />
       <Text fx:id="nameEditText" layoutX="466.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="155.580078125" />
       <Text fx:id="priceEditText" layoutX="618.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="155.5800781249999" />
-      <Button layoutX="673.0" layoutY="37.0" mnemonicParsing="false" onMouseClicked="#sortPrice" text="Sort Price" />
    </children>
 </Pane>

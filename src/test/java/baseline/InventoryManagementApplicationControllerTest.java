@@ -30,8 +30,8 @@ class InventoryManagementApplicationControllerTest  {
     @Test
     void removeAll() {
         InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
-        ObservableList<recordItem> tempItems = obj.removeAll();
-        ObservableList<recordItem> clearedList = InventoryManagementApplicationController.items;
+        ObservableList<RecordItems> tempItems = obj.removeAll();
+        ObservableList<RecordItems> clearedList = InventoryManagementApplicationController.items;
         clearedList.clear();
         assertEquals(clearedList, tempItems);
     }
@@ -39,9 +39,9 @@ class InventoryManagementApplicationControllerTest  {
     @Test
     void removedItem() {
         InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
-        ObservableList<recordItem> tempItems = InventoryManagementApplicationController.items;
-        ObservableList<recordItem> deletedItems = FXCollections.observableArrayList();
-        for(recordItem temp : tempItems){
+        ObservableList<RecordItems> tempItems = InventoryManagementApplicationController.items;
+        ObservableList<RecordItems> deletedItems = FXCollections.observableArrayList();
+        for(RecordItems temp : tempItems){
             if(temp.getSelect().isSelected()) {
                 deletedItems.add(temp);
             }
@@ -58,10 +58,9 @@ class InventoryManagementApplicationControllerTest  {
 
     @Test
     void searchByName() {
-        InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
-        ObservableList<recordItem> tempItems = InventoryManagementApplicationController.items;
-        ObservableList<recordItem> Searched = FXCollections.observableArrayList();
-        for(recordItem temp : tempItems){
+        ObservableList<RecordItems> tempItems = InventoryManagementApplicationController.items;
+        ObservableList<RecordItems> Searched = FXCollections.observableArrayList();
+        for(RecordItems temp : tempItems){
             if(temp.getName().contains("Name")) {
                 Searched.add(temp);
             }
@@ -71,10 +70,9 @@ class InventoryManagementApplicationControllerTest  {
 
     @Test
     void searchBySerialNumber() {
-        InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
-        ObservableList<recordItem> tempItems = InventoryManagementApplicationController.items;
-        ObservableList<recordItem> Searched = FXCollections.observableArrayList();
-        for(recordItem temp : tempItems){
+        ObservableList<RecordItems> tempItems = InventoryManagementApplicationController.items;
+        ObservableList<RecordItems> Searched = FXCollections.observableArrayList();
+        for(RecordItems temp : tempItems){
             if(temp.getName().contains("a-123-123-123")) {
                 Searched.add(temp);
             }
@@ -85,7 +83,8 @@ class InventoryManagementApplicationControllerTest  {
     @Test
     void editName() {
         InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
-        TableColumn.CellEditEvent<recordItem, String>recordItemStringCellEditEvent = null;
+        InventoryManagementApplicationController.items = null;
+        TableColumn.CellEditEvent<RecordItems, String>recordItemStringCellEditEvent = null;
 
         assertNull(obj.editName(recordItemStringCellEditEvent));
     }
@@ -93,7 +92,8 @@ class InventoryManagementApplicationControllerTest  {
     @Test
     void editPrice() {
         InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
-        TableColumn.CellEditEvent<recordItem, String>recordItemStringCellEditEvent = null;
+        InventoryManagementApplicationController.items = null;
+        TableColumn.CellEditEvent<RecordItems, String>recordItemStringCellEditEvent = null;
 
         assertNull(obj.editPrice(recordItemStringCellEditEvent));
     }
@@ -101,7 +101,8 @@ class InventoryManagementApplicationControllerTest  {
     @Test
     void editSerialNumber() {
         InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
-        TableColumn.CellEditEvent<recordItem, String>recordItemStringCellEditEvent = null;
+        InventoryManagementApplicationController.items = null;
+        TableColumn.CellEditEvent<RecordItems, String>recordItemStringCellEditEvent = null;
 
         assertNull(obj.editSerialNumber(recordItemStringCellEditEvent));
     }
