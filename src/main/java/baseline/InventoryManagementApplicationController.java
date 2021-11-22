@@ -232,6 +232,7 @@ public class InventoryManagementApplicationController {
     ObservableList<RecordItems> removeAll() {
         //deletes all the items inside the list
         items.clear();
+        table.setItems(items);
         //refreshes the table
         table.getColumns().get(0).setVisible(false);
         table.getColumns().get(0).setVisible(true);
