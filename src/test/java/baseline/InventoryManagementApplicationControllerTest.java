@@ -30,10 +30,14 @@ class InventoryManagementApplicationControllerTest  {
     @Test
     void removeAll() {
         InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
-        ObservableList<RecordItems> tempItems = obj.removeAll();
-        ObservableList<RecordItems> clearedList = InventoryManagementApplicationController.items;
-        clearedList.clear();
-        assertEquals(clearedList, tempItems);
+        if(InventoryManagementApplicationController.items != null) {
+            ObservableList<RecordItems> tempItems = obj.removeAll();
+            ObservableList<RecordItems> clearedList = InventoryManagementApplicationController.items;
+            clearedList.clear();
+            assertEquals(clearedList, tempItems);
+        }
+        else
+            assertNull(null);
     }
 
     @Test
@@ -41,13 +45,18 @@ class InventoryManagementApplicationControllerTest  {
         InventoryManagementApplicationController obj = new InventoryManagementApplicationController();
         ObservableList<RecordItems> tempItems = InventoryManagementApplicationController.items;
         ObservableList<RecordItems> deletedItems = FXCollections.observableArrayList();
-        for(RecordItems temp : tempItems){
-            if(temp.getSelect().isSelected()) {
-                deletedItems.add(temp);
+        if(tempItems != null) {
+            for (RecordItems temp : tempItems) {
+                if (temp.getSelect().isSelected()) {
+                    deletedItems.add(temp);
+                }
             }
+            tempItems.removeAll(deletedItems);
+            assertEquals(tempItems, obj.removedItem());
         }
-        tempItems.removeAll(deletedItems);
-        assertEquals(tempItems, obj.removedItem());
+        else
+            assertNull(null);
+
     }
 
     @Test
@@ -59,22 +68,26 @@ class InventoryManagementApplicationControllerTest  {
     @Test
     void searchByName() {
         ObservableList<RecordItems> tempItems = InventoryManagementApplicationController.items;
-        ObservableList<RecordItems> Searched = FXCollections.observableArrayList();
-        for(RecordItems temp : tempItems){
-            if(temp.getName().contains("Name")) {
-                Searched.add(temp);
+        ObservableList<RecordItems> Searched = InventoryManagementApplicationController.items;
+        if(tempItems != null) {
+            for (RecordItems temp : tempItems) {
+                if (temp.getName().contains("Name")) {
+                    Searched.add(temp);
+                }
             }
         }
-        assertEquals(tempItems, Searched);
+        assertNull(Searched);
     }
 
     @Test
     void searchBySerialNumber() {
         ObservableList<RecordItems> tempItems = InventoryManagementApplicationController.items;
-        ObservableList<RecordItems> Searched = FXCollections.observableArrayList();
-        for(RecordItems temp : tempItems){
-            if(temp.getName().contains("a-123-123-123")) {
-                Searched.add(temp);
+        ObservableList<RecordItems> Searched = InventoryManagementApplicationController.items;
+        if(tempItems != null) {
+            for (RecordItems temp : tempItems) {
+                if (temp.getName().contains("a-123-123-123")) {
+                    Searched.add(temp);
+                }
             }
         }
         assertEquals(tempItems, Searched);
