@@ -233,10 +233,8 @@ public class InventoryManagementApplicationController {
         //deletes all the items inside the list
         items.clear();
         //refreshes the table
-        if(table != null) {
-            table.getColumns().get(0).setVisible(false);
-            table.getColumns().get(0).setVisible(true);
-        }
+        table.getColumns().get(0).setVisible(false);
+        table.getColumns().get(0).setVisible(true);
         return items;
     }
 
